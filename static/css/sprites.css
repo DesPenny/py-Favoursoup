@@ -1,0 +1,46 @@
+.Google-plus, .linked_in_icon, .mail, .profilepic, .social-facebook-box-blue-icon, .SoupieSprite, .twitter-icon{
+	background: url('/static/images/sprites.png') no-repeat;
+}
+
+.Google-plus{
+	background-position: -546px -61px ;
+	width: 30px;
+	height: 30px;
+}
+
+.linked_in_icon{
+	background-position: -610px -60px ;
+	width: 30px;
+	height: 30px;
+}
+
+.mail{
+	background-position: -512px -8px ;
+	width: 30px;
+	height: 30px;
+}
+
+.profilepic{
+	background-position: -600px -8px ;
+	width: 30px;
+	height: 30px;
+}
+
+.social-facebook-box-blue-icon{
+	background-position: -511px -60px ;
+	width: 30px;
+	height: 30px;
+}
+
+.SoupieSprite{
+	background-position: -560px -8px ;
+	width: 30px;
+	height: 24px;
+}
+
+.twitter-icon{
+	background-position: -579px -61px ;
+	width: 30px;
+	height: 30px;
+}
+

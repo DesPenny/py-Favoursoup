@@ -39,21 +39,22 @@
 
   <body>
         <h2> Please Sign in </h2>
-    <div class="container">
-        <a class="btn btn-facebook" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook"></i> | SignIn with Facebook</a>
-        </br>
-        <a href="{% url 'social:begin' 'google-oauth2' %}"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | SignIn with Google+</button></a>
-        </br>
-        <a href="{% url 'social:begin' 'linkedin-oauth2' %}"><button class="btn btn-linkedin"><i class="fa fa-linkedin"></i> | SignIn with Linkedin</button></a>
-      </br>
+        <div class="container"style="text-align: center;">
+        <p><a class="btn btn-facebook" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook"></i> | SignIn with Facebook</a></p>
+        <p><a href="{% url 'social:begin' 'google-oauth2' %}"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | SignIn with Google+</button></a></p>
+        <p><a href="{% url 'social:begin' 'linkedin-oauth2' %}"><button class="btn btn-linkedin"><i class="fa fa-linkedin"></i> | SignIn with Linkedin</button></a></p>
+        </div>
       <form class="form-signin" role="form">
-        <h2 class="form-signin-heading">Email sign in</h2>
+        <h2 class="form-signin-heading">Email Login/Register</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" class="form-control" placeholder="Password" required>
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div class="btn-group">
+        <a><button class="btn btn-lg btn-primary btn-lg" type="submit">Login</button></a>
+        <a><button class="btn btn-lg btn-success btn-lg" type="submit">Register</button></a>
+        </div>
         </br>
         </form>
 

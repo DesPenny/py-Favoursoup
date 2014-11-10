@@ -18,6 +18,9 @@
     <!-- Custom styles for this template -->
     <link href="{% static "css/starter-template.css" %}" rel="stylesheet">
 
+    <!-- Sprites -->
+    <link href="{% static "css/sprites.css" %}" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
@@ -42,16 +45,39 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">FavourSoup</a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+          {% if request.user.is_authenticated %}
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+            </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          <ol class="nav navbar-nav pull-right">
+            <li><a class="mail" href="#"></a></li>
+            <li><a class="SoupieSprite" href="#"></a></li>
+            <li><a class="profilepic" href="#"></a></li>
+          </ol>
+          </div><!--/.nav-collapse -->
+          </div>
+          <div class="container-fluid breadcrumb-wrapper">
+            <ol class="breadcrumb hidden-xs hidden-sm" role="navigation">
+                <li class="active"><a href="#">Offered</a></li>
+                <li><a href="#">Wanted</a></li>
+                <ol class="nav navbar-nav pull-right">
+                    <li><a class="social-facebook-box-blue-icon" href="#"></a></li>
+                    <li><a class="Google-plus" href="#"></a></li>
+                    <li><a class="twitter-icon" href="#"></a></li>
+                    <li><a class="linked_in_icon" href="#"></a></li>
+                </ol>
+            </ol>
+          </div><!-- /.container-fluid -->
+          {% else %}
+          <button class="btn pull-right">Login/Register</button>
+          {% endif %}
+
     </div>
 
     <div class="container">
