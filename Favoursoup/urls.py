@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'Favoursoup.favoursoup.views.logout_view', name='logout'),
     url(r'^signup/$', 'Favoursoup.favoursoup.views.signup', name='signup'),
     url(r'^signin/$', 'Favoursoup.favoursoup.views.signin', name='signin'),
-    url(r'^$', 'profiles.views.all', name='home'),
+    #url(r'^$', 'profiles.views.all', name='home'),
 
     # url(r'^blog/', include('blog.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
