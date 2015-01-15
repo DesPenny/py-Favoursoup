@@ -1,3 +1,6 @@
+import re
+
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -17,3 +20,14 @@ urlpatterns = patterns('',
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.SERVE_MEDIA:
+    urlpatterns += patterns('django.contrib.staticfiles.views',
+        url(r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')), 'serve'),
+    )
+
+    urlpatterns += patterns('django.views.static',
+        url(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), 'serve', kwargs={
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    )

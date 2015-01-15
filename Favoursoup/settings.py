@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -21,6 +21,8 @@ SECRET_KEY = 'rh39!wl9tk1-q7t)dl+&s-!!wu=oe^+6v!mu7r$o2d1$i!_%5n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+SERVE_MEDIA = True
 
 TEMPLATE_DEBUG = True
 
@@ -212,7 +214,7 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION =True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/favoursoup/Favoursoup/db.sqlite',
+        'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite'),
                'USER': '',
                'PASSWORD': '',
                'HOST': '',
@@ -238,17 +240,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 
+STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
+STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "static", "static-only")
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'static', "media")
+MEDIA_URL = '/static/media/'
 
-#STATICFILES_DIRS = (
- #   os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "static", "static"),
-
-
-TEMPLATE_DIRS = (
-        '/home/favoursoup/Favoursoup/Favoursoup/favoursoup/static/templates',
+STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
 )
 
-#MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "static", "media")
+TEMPLATE_DIRS = (
+        os.path.join(BASE_DIR, 'templates'),
+)
 
-STATIC_URL = '/static/'
+
