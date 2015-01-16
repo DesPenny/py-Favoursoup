@@ -1,0 +1,31 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<ul>{% for provider in backends.not_associated %}<li><a href="{% url 'social:begin' provider %}">{{ provider }}</a></li>{% endfor %}</ul>
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Signup" %}</legend>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.errors }}
+    {% comment %} Displaying checkboxes differently {% endcomment %}
+    {% if field.name == 'tos' %}
+    <p class="checkbox">
+    <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+    </p>
+    {% else %}
+    <p>
+    {{ field.label_tag }} 
+    {{ field }}
+    </p>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+  <input type="submit" class="btn btn-success" value="{% trans "Signup"%}" />
+  <a href="{% url 'userena_signin' %}" class="btn btn-info">{% trans "Signin" %}</a>
+</form>
+{% endblock %}

@@ -1,19 +1,38 @@
+import re
+
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    (r'^accounts/', include('allauth.urls')),
-    url(r'^$', 'Favoursoup.favoursoup.views.home', name='home'),
-    url(r'^done/$', 'Favoursoup.favoursoup.views.done', name='done'),
-    url(r'^logout/$', 'Favoursoup.favoursoup.views.logout_view', name='logout'),
-    url(r'^signup/$', 'Favoursoup.favoursoup.views.signup', name='signup'),
-    url(r'^signin/$', 'Favoursoup.favoursoup.views.signin', name='signin'),
-    #url(r'^$', 'profiles.views.all', name='home'),
+from profiles.forms import SignupForm
 
-    # url(r'^blog/', include('blog.urls')),
-    url('', include('social.apps.django_app.urls', namespace='social')),
+urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^accounts/signup/$', 'userena.views.signup', {
+        'signup_form': SignupForm,
+        }, name='userena_signup'),
+    url(r'^accounts/', include('userena.urls')),
 )
+
+urlpatterns += patterns('Favoursoup.favoursoup.views',
+    url(r'^$', 'home', name='home'),
+    url(r'^done/$', 'done', name='done'),
+)
+
+urlpatterns += patterns('',
+    url('', include('social.apps.django_app.urls', namespace='social')),
+)
+
+if settings.SERVE_MEDIA:
+    urlpatterns += patterns('django.contrib.staticfiles.views',
+        url(r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')), 'serve'),
+    )
+
+    urlpatterns += patterns('django.views.static',
+        url(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), 'serve', kwargs={
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    )
