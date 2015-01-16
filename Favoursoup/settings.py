@@ -39,12 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'Favoursoup.favoursoup',
     'social.apps.django_app.default',
-    'allauth',
-    'allauth.account',
 
-
+    'Favoursoup.favoursoup',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,12 +59,10 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.linkedin.LinkedinOAuth2',
     'social.backends.google.GoogleOAuth2',
-    # Needed to login by username in Django admin, regardless of `allauth`
+    # 'social.backends.email.EmailAuth',
+    # 'social.backends.username.UsernameAuth',
+    
     "django.contrib.auth.backends.ModelBackend",
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
-
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -79,16 +74,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
+
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
 )
-
 
 #Facebook Auth
 SOCIAL_AUTH_FACEBOOK_KEY = '1501771236726203'
 SOCIAL_AUTH_FACEBOOK_SECRET = '8f94a1a58a7fe16df796094504bc7e80'
+
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
 
@@ -111,7 +105,6 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = [('id', 'id'),
 #Twitter Auth
 SOCIAL_AUTH_TWITTER_KEY = 'tv71Nt7TJLnNSK3GHO4am2nlc'
 SOCIAL_AUTH_TWITTER_SECRET = 'BeLh97LXecsOKSCUTRyjFMmCVH5gNgsOIE5NKyJ4qq0u6dOkGf'
-
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple
@@ -137,12 +130,11 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.get_username',
 
     # Send a validation email to the user to verify its email address.
-    # Disabled by default.
     # 'social.pipeline.mail.mail_validation',
 
     # Associates the current social details with another user account with
     # a similar email address. Disabled by default.
-     'social.pipeline.social_auth.associate_by_email',
+    'social.pipeline.social_auth.associate_by_email',
 
     # Create a user account if we haven't found one yet.
     'social.pipeline.user.create_user',
@@ -175,7 +167,6 @@ SOCIAL_AUTH_DISCONNECT_PIPELINE = (
 )
 
 
-
 ROOT_URLCONF = 'Favoursoup.urls'
 
 WSGI_APPLICATION = 'Favoursoup.wsgi.application'
@@ -183,30 +174,7 @@ WSGI_APPLICATION = 'Favoursoup.wsgi.application'
 SITE_ID = 1
 
 LOGIN_URL = "/"
-
 LOGIN_REDIRECT_URL = "/"
-
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_CONFIRM_EMAIL_ON_GET = False
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 10
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = None
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "Subject is: "
-ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
-ACCOUNT_SIGNUP_FORM_CLASS = None
-ACCOUNT_SIGNUP_PASSWORD_VERIFICATION =True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD ="email"
-ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
-
-ACCOUNT_USERNAME_MIN_LENGTH =4
-ACCOUNT_USERNAME_REQUIRED =False
-ACCOUNT_PASSWORD_INPUT_RENDER_VALUE =False
-ACCOUNT_PASSWORD_MIN_LENGTH =6
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION =True
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -215,10 +183,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, '..', 'db.sqlite'),
-               'USER': '',
-               'PASSWORD': '',
-               'HOST': '',
-               'PORT': ''
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': ''
     }
 }
 
@@ -235,10 +203,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
 STATIC_URL = '/static/'
@@ -254,4 +220,7 @@ TEMPLATE_DIRS = (
         os.path.join(BASE_DIR, 'templates'),
 )
 
-
+try:
+    from local_settings import *
+except ImportError:
+    pass
