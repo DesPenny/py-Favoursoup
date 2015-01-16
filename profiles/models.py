@@ -1,5 +1,8 @@
 from django.db import models
+from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
+
+from userena.models import UserenaBaseProfile
 
 
 # Create your models here.
@@ -47,3 +50,7 @@ class UserPicture(models.Model):
 
 	def __unicode__(self, ):
 		return str(self.image)
+
+
+class UserProfile(UserenaBaseProfile):
+        user = models.OneToOneField(User, unique=True, verbose_name=_('user'), related_name='user_profile')

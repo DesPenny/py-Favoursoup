@@ -6,17 +6,20 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+from profiles.forms import SignupForm
+
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^accounts/signup/$', 'userena.views.signup', {
+        'signup_form': SignupForm,
+        }, name='userena_signup'),
+    url(r'^accounts/', include('userena.urls')),
 )
 
 urlpatterns += patterns('Favoursoup.favoursoup.views',
     url(r'^$', 'home', name='home'),
     url(r'^done/$', 'done', name='done'),
-    url(r'^logout/$', 'logout_view', name='logout'),
-    url(r'^signup/$', 'signup', name='signup'),
-    url(r'^signin/$', 'signin', name='signin'),
-    url(r'^email-sent/$', 'validation_sent'),
 )
 
 urlpatterns += patterns('',

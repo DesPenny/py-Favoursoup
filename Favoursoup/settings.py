@@ -41,7 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'social.apps.django_app.default',
 
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    
     'Favoursoup.favoursoup',
+    'profiles',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,17 +57,9 @@ MIDDLEWARE_CLASSES = (
     #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
 
-AUTHENTICATION_BACKENDS = (
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.facebook.FacebookOAuth2',
-    'social.backends.linkedin.LinkedinOAuth2',
-    'social.backends.google.GoogleOAuth2',
-    # 'social.backends.email.EmailAuth',
-    # 'social.backends.username.UsernameAuth',
-    
-    "django.contrib.auth.backends.ModelBackend",
+    'profiles.middleware.ProfileMiddleware',
+    #'profiles.middleware.EmailRequiredMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -78,6 +75,34 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    
+    'django.contrib.auth.backends.ModelBackend',
+
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.linkedin.LinkedinOAuth2',
+    'social.backends.google.GoogleOAuth2',
+)
+
+ANONYMOUS_USER_ID = -1
+
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+
+USERENA_ACTIVATION_DAYS = 3
+USERENA_DISABLE_PROFILE_LIST = True
+USERENA_WITHOUT_USERNAMES = True
+USERENA_SIGNIN_REDIRECT_URL = '/'
+USERENA_REDIRECT_ON_SIGNOUT = '/'
+GUARDIAN_RENDER_403 = True
+
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+LOGIN_REDIRECT_URL = '/'  # redirect url after successful login
+LOGIN_ERROR_URL = '/'
 
 #Facebook Auth
 SOCIAL_AUTH_FACEBOOK_KEY = '1501771236726203'
@@ -105,6 +130,8 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = [('id', 'id'),
 #Twitter Auth
 SOCIAL_AUTH_TWITTER_KEY = 'tv71Nt7TJLnNSK3GHO4am2nlc'
 SOCIAL_AUTH_TWITTER_SECRET = 'BeLh97LXecsOKSCUTRyjFMmCVH5gNgsOIE5NKyJ4qq0u6dOkGf'
+
+SOCIAL_AUTH_SLUGIFY_USERNAMES = True
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple
@@ -134,10 +161,10 @@ SOCIAL_AUTH_PIPELINE = (
 
     # Associates the current social details with another user account with
     # a similar email address. Disabled by default.
-    'social.pipeline.social_auth.associate_by_email',
+    # 'social.pipeline.social_auth.associate_by_email',
 
-    # Create a user account if we haven't found one yet.
-    'social.pipeline.user.create_user',
+    'profiles.pipeline.redirect_to_signup_form',
+    'profiles.pipeline.create_user',
 
     # Create the record that associated the social account with this user.
     'social.pipeline.social_auth.associate_user',
@@ -172,9 +199,6 @@ ROOT_URLCONF = 'Favoursoup.urls'
 WSGI_APPLICATION = 'Favoursoup.wsgi.application'
 
 SITE_ID = 1
-
-LOGIN_URL = "/"
-LOGIN_REDIRECT_URL = "/"
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
