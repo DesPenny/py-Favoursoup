@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from config import *
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -44,7 +45,7 @@ INSTALLED_APPS = (
     'userena',
     'guardian',
     'easy_thumbnails',
-    
+
     'Favoursoup.favoursoup',
     'profiles',
 )
@@ -79,7 +80,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 AUTHENTICATION_BACKENDS = (
     'userena.backends.UserenaAuthenticationBackend',
     'guardian.backends.ObjectPermissionBackend',
-    
+
     'django.contrib.auth.backends.ModelBackend',
 
     'social.backends.twitter.TwitterOAuth',
@@ -104,32 +105,6 @@ LOGOUT_URL = '/accounts/signout/'
 LOGIN_REDIRECT_URL = '/'  # redirect url after successful login
 LOGIN_ERROR_URL = '/'
 
-#Facebook Auth
-SOCIAL_AUTH_FACEBOOK_KEY = '1501771236726203'
-SOCIAL_AUTH_FACEBOOK_SECRET = '8f94a1a58a7fe16df796094504bc7e80'
-
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
-
-#Google+ Auth
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '998998365128-l5vh4lprl621mj7gcf14k42bmmk1qa5o.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '3lzJgKnT_f5Htb7WIQB2esxz'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
-
-#Linkedin Auth
-SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '75dl1hlzpa027k'
-SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'jFkcEcCP5z88eT4d'
-SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ['r_basicprofile', 'r_emailaddress', 'w_messages']
-SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = [('id', 'id'),
-                                   ('firstName', 'first_name'),
-                                   ('lastName', 'last_name'),
-                                   ('emailAddress', 'email_address'),
-                                   ('headline', 'headline'),
-                                   ('industry', 'industry')]
-
-#Twitter Auth
-SOCIAL_AUTH_TWITTER_KEY = 'tv71Nt7TJLnNSK3GHO4am2nlc'
-SOCIAL_AUTH_TWITTER_SECRET = 'BeLh97LXecsOKSCUTRyjFMmCVH5gNgsOIE5NKyJ4qq0u6dOkGf'
 
 SOCIAL_AUTH_SLUGIFY_USERNAMES = True
 
